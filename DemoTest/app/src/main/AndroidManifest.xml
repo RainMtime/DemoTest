@@ -22,6 +22,8 @@
         <activity android:name=".MediaPlayerActivity"></activity>
         <activity android:name=".VideoViewActivity"></activity>
         <activity android:name=".ServiceActivity"></activity>
+        <activity android:name=".AnimationActivity"></activity>
+        <activity android:name=".CustomeViewActivity"></activity>
         <service android:name=".services.LocalService"></service>
     </application>
 

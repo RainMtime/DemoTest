@@ -1,6 +1,7 @@
 package com.example.chunyu.demotest.Utils;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
@@ -12,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.Random;
 
 /**
  * Created by chunyu on 2017/6/14.
@@ -21,6 +23,7 @@ public final class DemoUtils {
 
     private static final String TAG = "DemoUtils";
 
+
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
@@ -29,6 +32,19 @@ public final class DemoUtils {
     public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getHeight();
+    }
+
+    public static int getRandomColor() {
+        Random random = new Random();
+        int a = 255;
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        a = a << 24;
+        r = r << 16;
+        g = g << 8;
+        b = b << 0;
+        return a | r | b | g;
     }
 
 

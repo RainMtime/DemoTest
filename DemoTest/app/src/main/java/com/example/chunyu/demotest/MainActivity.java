@@ -104,6 +104,18 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
+            case R.id.nav_view_animation:{
+                Intent intent = new Intent(this,AnimationActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.enter_anim,R.anim.exit_anim);
+            }
+            break;
+            case R.id.nav_custome_view:{
+                Intent intent = new Intent(this,CustomeViewActivity.class);
+                startActivity(intent);
+            }
+            default:
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

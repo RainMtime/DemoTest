@@ -36,35 +36,50 @@
     <item android:title="四大组件">
         <menu>
             <item
-                android:title="Activity"
+                android:id="@+id/nav_activity"
                 android:icon="@drawable/ic_menu_camera"
-                android:id="@+id/nav_activity" />
+                android:title="Activity" />
 
             <item
-                android:title="Service"
+                android:id="@+id/nav_Service"
                 android:icon="@drawable/ic_menu_camera"
-                android:id="@+id/nav_Service" />
+                android:title="Service" />
         </menu>
     </item>
 
     <item android:title="多媒体Demo">
         <menu>
             <item
-                android:title="MediaPlayer"
+                android:id="@+id/nav_mediaplayer"
                 android:icon="@drawable/ic_menu_camera"
-                android:id="@+id/nav_mediaplayer" />
+                android:title="MediaPlayer" />
 
             <item
-                android:title="MediaPlayer2"
+                android:id="@+id/nav_mediaplayer2"
                 android:icon="@drawable/ic_menu_camera"
-                android:id="@+id/nav_mediaplayer2" />
+                android:title="MediaPlayer2" />
 
             <item
-                android:title="VideoView"
+                android:id="@+id/nav_videoview"
                 android:icon="@drawable/ic_menu_camera"
-                android:id="@+id/nav_videoview" />
+                android:title="VideoView" />
         </menu>
     </item>
+
+    <item android:title="动画相关">
+        <menu>
+            <item
+                android:id="@+id/nav_view_animation"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="View动画" />
+
+            <item
+                android:id="@+id/nav_custome_view"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="自定义View" />
+        </menu>
+    </item>
+
 
 
 </menu>
