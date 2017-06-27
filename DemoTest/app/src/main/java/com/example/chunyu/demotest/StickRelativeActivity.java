@@ -59,60 +59,66 @@ public class StickRelativeActivity extends AppCompatActivity {
         mRelativeLayout.setDispatchTouchEventListener(mDispatchTouchEventListener);
 
     }
+    private  int  getRecycleViewTop(){
+        int[] location = new int[2];
+         mRecyclerView.getLocationOnScreen(location);
+        return location[1];
+    }
 
     private StickRelativeLayout.DispatchTouchEventListener mDispatchTouchEventListener = new StickRelativeLayout.DispatchTouchEventListener() {
 
         float originY, originX;
         boolean mMoved;
         boolean mbeginSlide = false;
+        boolean isInTop = false;
+
 
         @Override
         public boolean dispatchTouchEvent(MotionEvent event) {
             float distanceY;
             boolean consumed = false;
 
+
             Log.d("chunyu-debug", "playerview touch event = " + event.getActionMasked()
                     + " distance = " + (event.getRawY() - originY)
 
                     + "  mMoved = " + mMoved);
-            if (isTop()) {
-                Log.e("chunyu-test", "isTop =true");
-                switch (event.getActionMasked()) {
+            switch (event.getActionMasked()) {
 
-                    case MotionEvent.ACTION_DOWN:
-                        originY = event.getRawY();
-                        Log.d("chunyu-debug", "originY = " + originY);
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                        //待补充
-                        break;
-                    case MotionEvent.ACTION_MOVE:
+                case MotionEvent.ACTION_DOWN:
+                    originY = event.getRawY();
+                    isInTop = isTop();
+                    Log.d("chunyu-debug", "originY = " + originY);
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    //待补充
+
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    if (isInTop) {
                         distanceY = event.getRawY() - originY;
                         //代表下滑
                         if (distanceY > 0) {
                             mMoved = true;
-                            animationTo(distanceY);
+                            animationTo(distanceY,true);
                             consumed = true;
                         }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mMoved) {
-                            distanceY = event.getRawY() - originY;
-                            if (distanceY > 200) {
-                                animationShow();
-                            } else {
-                                //划回顶部。
-                                animationShow();
-                            }
-                            animationTo(0);
-                            consumed = true;
-                            mMoved = false;
-
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (isInTop && mMoved) {
+                        distanceY = event.getRawY() - originY;
+                        if (distanceY > 200) {
+                            animationShow();
+                        } else {
+                            //划回顶部。
+                            animationShow();
                         }
-                        break;
-                }
-            } else {
-                Log.e("chunyu-debug", "isTop:" + isTop());
+                        consumed = true;
+                        mMoved = false;
+                        isInTop = false;
+                    }
+                    break;
             }
             return consumed;
         }
@@ -167,14 +173,14 @@ public class StickRelativeActivity extends AppCompatActivity {
 
     private void animationShow() {
         ValueAnimator animator = ValueAnimator.ofFloat(1f, 0f);
-        animator.setDuration(500);
-        final float startY = mRecyclerView.getTranslationY();
+        animator.setDuration(200);
+        final float startY = mRelativeLayout.getTranslationY();
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 Float animtedValue = (Float) animation.getAnimatedValue();
                 if (animtedValue != null) {
-                    animationTo(animtedValue * startY);
+                    animationTo(animtedValue * startY,false);
                     Log.i("chunyu-debug", "TranlateY:" + animtedValue * startY);
                 }
             }
@@ -183,9 +189,19 @@ public class StickRelativeActivity extends AppCompatActivity {
     }
 
     // 利用函数做拉力效果。
-    private void animationTo(float distanceY) {
-        Log.d("chunyu-debug", "distanceY:" + distanceY);
-        mRecyclerView.setTranslationY((int) distanceY);
+    private void animationTo(float distanceY ,boolean iszuni) {
+
+         if (iszuni){
+             double realDistanceY = Math.pow((double) distanceY, 0.80);
+             Log.d("chunyu-debug", "distanceY=" + distanceY+"\t realDistanceY =" + realDistanceY);
+             mRelativeLayout.setTranslationY((int) realDistanceY);
+
+         }else {
+
+             mRelativeLayout.setTranslationY((int) distanceY);
+         }
+
+
     }
 
 
