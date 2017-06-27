@@ -104,16 +104,22 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
-            case R.id.nav_view_animation:{
-                Intent intent = new Intent(this,AnimationActivity.class);
+            case R.id.nav_view_animation: {
+                Intent intent = new Intent(this, AnimationActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.enter_anim,R.anim.exit_anim);
+                overridePendingTransition(R.anim.enter_anim, R.anim.exit_anim);
             }
             break;
-            case R.id.nav_custome_view:{
-                Intent intent = new Intent(this,CustomeViewActivity.class);
+            case R.id.nav_custome_view: {
+                Intent intent = new Intent(this, CustomeViewActivity.class);
                 startActivity(intent);
             }
+            break;
+            case R.id.nav_stick_layout: {
+                Intent intent = new Intent(this, StickRelativeActivity.class);
+                startActivity(intent);
+            }
+            break;
             default:
                 break;
         }

@@ -77,6 +77,11 @@
                 android:id="@+id/nav_custome_view"
                 android:icon="@drawable/ic_menu_camera"
                 android:title="自定义View" />
+
+            <item
+                android:id="@+id/nav_stick_layout"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="自定义View" />
         </menu>
     </item>
 
