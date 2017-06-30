@@ -56,12 +56,26 @@ public class StickRelativeActivity extends AppCompatActivity {
         mAdapter.setData(mDataList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-        mRelativeLayout.setDispatchTouchEventListener(mDispatchTouchEventListener);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
 
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                Log.e("chunyu-recycleView", "上滑：" + recyclerView.canScrollVertically(1));
+                Log.e("chunyu-recycleView", "下滑：" + recyclerView.canScrollVertically(-1));
+            }
+        });
+//        mRelativeLayout.setDispatchTouchEventListener(mDispatchTouchEventListener);
     }
-    private  int  getRecycleViewTop(){
+
+    private int getRecycleViewTop() {
         int[] location = new int[2];
-         mRecyclerView.getLocationOnScreen(location);
+        mRecyclerView.getLocationOnScreen(location);
         return location[1];
     }
 
@@ -100,7 +114,7 @@ public class StickRelativeActivity extends AppCompatActivity {
                         //代表下滑
                         if (distanceY > 0) {
                             mMoved = true;
-                            animationTo(distanceY,true);
+                            animationTo(distanceY, true);
                             consumed = true;
                         }
                     }
@@ -124,7 +138,8 @@ public class StickRelativeActivity extends AppCompatActivity {
         }
     };
 
-//    private void tempIntercepter(){
+
+    private void animationShow() {//    private void tempIntercepter(){
 //        Log.d("chunyu-debug", "playerview touch event = " + event.getActionMasked()
 //                + " distance = " + (event.getRawY() - originY)
 //
@@ -170,8 +185,6 @@ public class StickRelativeActivity extends AppCompatActivity {
 //                break;
 //        }
 //    }
-
-    private void animationShow() {
         ValueAnimator animator = ValueAnimator.ofFloat(1f, 0f);
         animator.setDuration(200);
         final float startY = mRelativeLayout.getTranslationY();
@@ -180,7 +193,7 @@ public class StickRelativeActivity extends AppCompatActivity {
             public void onAnimationUpdate(ValueAnimator animation) {
                 Float animtedValue = (Float) animation.getAnimatedValue();
                 if (animtedValue != null) {
-                    animationTo(animtedValue * startY,false);
+                    animationTo(animtedValue * startY, false);
                     Log.i("chunyu-debug", "TranlateY:" + animtedValue * startY);
                 }
             }
@@ -189,17 +202,17 @@ public class StickRelativeActivity extends AppCompatActivity {
     }
 
     // 利用函数做拉力效果。
-    private void animationTo(float distanceY ,boolean iszuni) {
+    private void animationTo(float distanceY, boolean iszuni) {
 
-         if (iszuni){
-             double realDistanceY = Math.pow((double) distanceY, 0.80);
-             Log.d("chunyu-debug", "distanceY=" + distanceY+"\t realDistanceY =" + realDistanceY);
-             mRelativeLayout.setTranslationY((int) realDistanceY);
+        if (iszuni) {
+            double realDistanceY = Math.pow((double) distanceY, 0.80);
+            Log.d("chunyu-debug", "distanceY=" + distanceY + "\t realDistanceY =" + realDistanceY);
+            mRelativeLayout.setTranslationY((int) realDistanceY);
 
-         }else {
+        } else {
 
-             mRelativeLayout.setTranslationY((int) distanceY);
-         }
+            mRelativeLayout.setTranslationY((int) distanceY);
+        }
 
 
     }
