@@ -81,7 +81,12 @@
             <item
                 android:id="@+id/nav_stick_layout"
                 android:icon="@drawable/ic_menu_camera"
-                android:title="自定义View" />
+                android:title="粘滞的RecycleView" />
+
+            <item
+                android:id="@+id/nav_skin"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="换肤探索" />
         </menu>
     </item>
 

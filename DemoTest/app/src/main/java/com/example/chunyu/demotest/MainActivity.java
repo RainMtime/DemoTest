@@ -120,6 +120,12 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
+            case R.id.nav_skin:
+            {
+                Intent intent = new Intent(this,SkinActivity.class);
+                startActivity(intent);
+            }
+            break;
             default:
                 break;
         }
