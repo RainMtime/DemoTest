@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <Button
         android:id="@+id/skin_btn"
-        android:background="@drawable/skin_btn_selector"
         android:layout_width="100dp"
-        android:text="明天你好"
-        android:layout_height="100dp" />
+        android:layout_height="100dp"
+        android:background="@drawable/skin_drawable_selector"
+        android:text="明天你好" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:text="明天你好！"
+        android:textColor="@color/text_color_selector" />
+
+
+</RelativeLayout>

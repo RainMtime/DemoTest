@@ -3,6 +3,7 @@ package com.example.chunyu.demotest;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -10,7 +11,7 @@ import android.widget.Button;
  * Created by 人间一小雨 on 2017/7/1.
  */
 
-public class SkinActivity extends Activity {
+public class SkinActivity extends AppCompatActivity {
 
     Button mBtn;
 
