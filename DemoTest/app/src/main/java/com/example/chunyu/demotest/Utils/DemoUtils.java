@@ -1,18 +1,21 @@
 package com.example.chunyu.demotest.Utils;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Random;
 
 /**
@@ -123,6 +126,31 @@ public final class DemoUtils {
 
     public static String getInnerSDCardPath() {
         return Environment.getExternalStorageDirectory().getPath();
+    }
+
+
+    public static void sendPost() {
+
+    }
+
+    public static void sendGet() throws Exception {
+        String url = "http://www.baidu.com";
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("GET");
+//        con.setRequestProperty("User-Agent","");
+
+        BufferedReader bufferReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder stringBuilder = new StringBuilder();
+        while ((inputLine = bufferReader.readLine()) != null) {
+            stringBuilder.append(inputLine);
+        }
+        bufferReader.close();
+        Log.i(TAG, "content:" + stringBuilder);
+
     }
 
 }
