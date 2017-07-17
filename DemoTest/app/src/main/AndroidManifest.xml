@@ -27,6 +27,10 @@
         <activity android:name=".StickRelativeActivity"></activity>
         <activity android:name=".FragmentAnimActivity"></activity>
 
+        <activity
+            android:name=".SkinActivity"
+            android:theme="@style/AppTheme.Black"></activity>
+
         <service android:name=".services.LocalService"></service>
     </application>
 

@@ -22,4 +22,14 @@
         <attr name="paint_color" format="color"/>
     </declare-styleable>
 
+    <style name="AppTheme.Black">
+        <item name="skin_btn1">@color/colorAccent</item>
+        <item name="skin_drawable">@drawable/ic_menu_camera</item>
+    </style>
+
+    <style name="AppTheme.Light">
+        <item name="skin_btn1">@color/colorPrimary</item>
+        <item name="skin_drawable">@drawable/ic_menu_gallery</item>
+    </style>
+
 </resources>
