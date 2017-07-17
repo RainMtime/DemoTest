@@ -33,7 +33,7 @@
     <!--</menu>-->
     <!--</item>-->
 
-    <item android:title="四大组件">
+    <item android:title="常用组件">
         <menu>
             <item
                 android:id="@+id/nav_activity"
@@ -44,6 +44,10 @@
                 android:id="@+id/nav_Service"
                 android:icon="@drawable/ic_menu_camera"
                 android:title="Service" />
+            <item
+                android:id="@+id/nav_fragment"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="fragment" />
         </menu>
     </item>
 

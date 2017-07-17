@@ -25,6 +25,8 @@
         <activity android:name=".AnimationActivity"></activity>
         <activity android:name=".CustomeViewActivity"></activity>
         <activity android:name=".StickRelativeActivity"></activity>
+        <activity android:name=".FragmentAnimActivity"></activity>
+
         <service android:name=".services.LocalService"></service>
     </application>
 

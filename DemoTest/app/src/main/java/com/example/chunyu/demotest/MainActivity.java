@@ -120,6 +120,11 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
+            case R.id.nav_fragment: {
+                Intent intent = new Intent(this, FragmentAnimActivity.class);
+                startActivity(intent);
+            }
+            break;
             default:
                 break;
         }

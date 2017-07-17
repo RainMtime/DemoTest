@@ -116,7 +116,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setCustomAnimations(R.anim.enter_anim,R.anim.exit_anim,R.anim.anim_enter_anim,R.anim.anim_exit_anim);
         AnimFragment fragment = new AnimFragment();
-       fragmentTransaction.add(R.id.fake_container,fragment).commit();
+       fragmentTransaction.add(R.id.fake_container,fragment).commitAllowingStateLoss();
     }
 
     private void printVisibleRect(){

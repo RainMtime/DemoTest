@@ -2,6 +2,8 @@ package com.example.chunyu.demotest.Utils;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -26,6 +28,16 @@ public final class DemoUtils {
 
     private static final String TAG = "DemoUtils";
 
+    private static Thread sMainThread = Looper.getMainLooper().getThread();
+    private static Handler sMainHandler = new Handler(Looper.getMainLooper());
+
+    public static void post(Runnable r) {
+        sMainHandler.post(r);
+    }
+
+    public static void postDelay(Runnable r, long delay) {
+        sMainHandler.postDelayed(r, delay);
+    }
 
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
