@@ -26,6 +26,7 @@
         <activity android:name=".CustomeViewActivity"></activity>
         <activity android:name=".StickRelativeActivity"></activity>
         <activity android:name=".FragmentAnimActivity"></activity>
+        <activity android:name=".NdkActivity"></activity>
 
         <activity
             android:name=".SkinActivity"

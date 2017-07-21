@@ -125,9 +125,13 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
-            case R.id.nav_skin:
-            {
-                Intent intent = new Intent(this,SkinActivity.class);
+            case R.id.nav_skin: {
+                Intent intent = new Intent(this, SkinActivity.class);
+                startActivity(intent);
+            }
+            break;
+            case R.id.nav_ndk: {
+                Intent intent = new Intent(this, NdkActivity.class);
                 startActivity(intent);
             }
             break;

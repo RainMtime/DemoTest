@@ -94,6 +94,14 @@
         </menu>
     </item>
 
+    <item android:title="NDK开发相关">
+        <menu>
+            <item
+                android:id="@+id/nav_ndk"
+                android:title="ndk初试"
+                android:icon="@drawable/ic_menu_camera" />
+        </menu>
+    </item>
 
 
 </menu>
