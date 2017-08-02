@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class StickRelativeActivity extends AppCompatActivity {
     MyAdapter mAdapter;
 
     LinearLayoutManager mLinearLayoutManager;
+    GridLayoutManager mGridLayoutManager;
     StickRelativeLayout mRelativeLayout;
 
 
@@ -45,14 +47,17 @@ public class StickRelativeActivity extends AppCompatActivity {
         mRelativeLayout = (StickRelativeLayout) findViewById(R.id.root_view);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+//        mLinearLayoutManager = new LinearLayoutManager(this);
+//        mGridLayoutManager = new GridLayoutManager(this, 4);
+//        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+//        mRecyclerView.setLayoutManager(mGridLayoutManager);
 
         mAdapter = new MyAdapter(this);
         ArrayList<String> mDataList = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             mDataList.add("我是第" + i + "个元素");
         }
+        mRecyclerView.setLayoutManager(mAdapter.getGridLayoutManager());
         mAdapter.setData(mDataList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
@@ -240,8 +245,23 @@ public class StickRelativeActivity extends AppCompatActivity {
 
         Context mContext;
 
+        private GridLayoutManager mGridLayoutManager;
+
         public MyAdapter(Context context) {
             mContext = context;
+            mGridLayoutManager = new GridLayoutManager(context, 4);
+            mGridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+
+                    String str = getItem(position);
+                    if (str.contains("4")) {
+                        return 4;
+                    }
+                    return 1;
+                }
+            });
+
         }
 
         ArrayList<String> mData = new ArrayList<>();
@@ -257,7 +277,7 @@ public class StickRelativeActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(MyVH holder, int position) {
-            String text = mData.get(position);
+            String text = getItem(position);
             ((TextView) holder.itemView).setText(text);
             ((TextView) holder.itemView).setTextColor(DemoUtils.getRandomColor());
         }
@@ -268,7 +288,16 @@ public class StickRelativeActivity extends AppCompatActivity {
         }
 
         public void setData(ArrayList<String> data) {
+
             mData.addAll(data);
+        }
+
+        public String getItem(int position) {
+            return mData.get(position);
+        }
+
+        public GridLayoutManager getGridLayoutManager() {
+            return mGridLayoutManager;
         }
     }
 
