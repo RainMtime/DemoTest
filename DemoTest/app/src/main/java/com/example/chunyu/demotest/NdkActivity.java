@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import com.example.chunyu.demotest.ndk.NdkTest;
+import com.example.chunyu.demotest.ndk.TestNdk;
 
 /**
  * Created by chunyu on 2017/7/21.
@@ -15,9 +15,9 @@ public class NdkActivity extends AppCompatActivity {
 
     TextView mTextView;
 
-//    static {
-//        System.loadLibrary("hello");
-//    }
+    static {
+        System.loadLibrary("jni-test");
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,11 +27,12 @@ public class NdkActivity extends AppCompatActivity {
     }
 
     private void initView() {
-       System.loadLibrary("hello");
-        mTextView = (TextView) findViewById(R.id.ndk_text);
-        NdkTest ndkTest = new NdkTest();
 
-        mTextView.setText(ndkTest.getStringFromNative());
+        mTextView = (TextView) findViewById(R.id.ndk_text);
+
+        TestNdk testNdk = new TestNdk();
+
+        mTextView.setText(testNdk.getfriend());
     }
 
 
