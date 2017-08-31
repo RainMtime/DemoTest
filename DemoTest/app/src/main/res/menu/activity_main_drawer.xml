@@ -103,5 +103,19 @@
         </menu>
     </item>
 
+    <item android:title="无障碍化">
+        <menu>
+            <item
+                android:id="@+id/nav_accessibilty"
+                android:title="无障碍化"
+                android:icon="@drawable/ic_menu_camera" />
+            <item
+                android:id="@+id/nav_picture"
+                android:title="图片测试"
+                android:icon="@drawable/ic_menu_camera" />
+        </menu>
+
+    </item>
+
 
 </menu>

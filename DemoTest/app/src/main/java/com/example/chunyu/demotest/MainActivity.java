@@ -135,6 +135,15 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
+            case R.id.nav_accessibilty: {
+                Intent intent = new Intent(this, AccessibilityActivity.class);
+                startActivity(intent);
+            }
+            case R.id.nav_picture: {
+                Intent intent = new Intent(this, PictureActivity.class);
+                startActivity(intent);
+            }
+            break;
             default:
                 break;
         }
