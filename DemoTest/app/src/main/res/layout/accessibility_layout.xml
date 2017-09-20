@@ -17,13 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:text="TextView"
-            android:layout_centerHorizontal="true" />
+       <com.example.chunyu.demotest.customeView.AccessibilityTextView
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:focusable="true"
+           android:importantForAccessibility="yes"
+           android:id="@+id/accessibility"
+           android:focusableInTouchMode="true"
+           android:background="@color/colorAccent"/>
     </RelativeLayout>
 
 
