@@ -34,6 +34,7 @@
         <activity android:name=".NdkActivity"></activity>
         <activity android:name=".AccessibilityActivity"></activity>
         <activity android:name=".PictureActivity"></activity>
+        <activity android:name=".NestedRecycyleViewActivity"></activity>
 
         <activity
             android:name=".SkinActivity"

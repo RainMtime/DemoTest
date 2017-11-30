@@ -145,6 +145,13 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
             break;
+
+            case R.id.nav_nestedRecycleView: {
+                Intent intent = new Intent(this, NestedRecycyleViewActivity.class);
+                startActivity(intent);
+            }
+            break;
+
             default:
                 break;
         }

@@ -48,6 +48,12 @@
                 android:id="@+id/nav_fragment"
                 android:icon="@drawable/ic_menu_camera"
                 android:title="fragment" />
+
+            <item
+                android:id="@+id/nav_nestedRecycleView"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="嵌套RecycleView" />
+
         </menu>
     </item>
 
