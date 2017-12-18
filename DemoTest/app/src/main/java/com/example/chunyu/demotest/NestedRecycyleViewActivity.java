@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
  */
 
 public class NestedRecycyleViewActivity extends AppCompatActivity {
-
-
     public static final String TAG = "chunyu_test";
     RecyclerView mRecyclerView;
     Button mButton;
@@ -29,7 +26,6 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.nested_recycler_view_layout);
         initView();
     }
@@ -38,19 +34,34 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
     protected void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
         mButton = (Button) findViewById(R.id.button);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mRecyclerView.getAdapter().notifyDataSetChanged();
-            }
-        });
 
         SampleAdapter adapter = new SampleAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setItemViewCacheSize(4);
         adapter.setData(mockData());
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                printChildHashCode();
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        printChildHashCode();
+                    }
+                });
+            }
+        });
+
+    }
+
+    public void printChildHashCode() {
+        int childCount = mRecyclerView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            Log.i("hash_code", "pos:" + i + "hashcode:" + mRecyclerView.getChildAt(i).hashCode());
+        }
     }
 
     protected ArrayList<ArrayList<String>> mockData() {
@@ -79,7 +90,9 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
         @Override
         public SampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(mComtext).inflate(R.layout.item_recycle_view_layout, parent, false);
+            Log.i("chunyu-create","onCreateViewHolder");
             return new SampleViewHolder(view, mComtext);
+
         }
 
         @Override
@@ -153,7 +166,8 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
         public void setData(ArrayList<String> datas) {
             mData.clear();
             mData.addAll(datas);
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
+            notifyItemRangeChanged(0, datas.size());
         }
 
         @Override
@@ -195,8 +209,6 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             mRecyclerView.setLayoutManager(layoutManager);
-            LinearSnapHelper linearSnapHelper = new LinearSnapHelper();
-            linearSnapHelper.attachToRecyclerView(mRecyclerView);
             mRecyclerView.setAdapter(new ItemAdapter(context));
             Log.i(NestedRecycyleViewActivity.TAG, "SampleViewHolder");
 

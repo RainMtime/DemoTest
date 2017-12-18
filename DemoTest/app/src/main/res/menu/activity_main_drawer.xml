@@ -53,6 +53,11 @@
                 android:id="@+id/nav_nestedRecycleView"
                 android:icon="@drawable/ic_menu_camera"
                 android:title="嵌套RecycleView" />
+            <item
+                android:id="@+id/nav_listViewNestedRecycleView"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="ListView嵌套RecycleView" />
+
 
         </menu>
     </item>

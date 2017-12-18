@@ -1,0 +1,8 @@
+DemoTest/*.iml
+DemoTest/.gradle
+DemoTest/.idea
+.DS_Store
+DemoTest/.DS_Store
+DemoTest/build
+DemoTest/captures
+DemoTest/.externalNativeBuild

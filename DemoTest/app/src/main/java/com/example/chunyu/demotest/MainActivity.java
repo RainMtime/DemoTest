@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
 
 
-
             }
         });
 
@@ -157,6 +156,12 @@ public class MainActivity extends AppCompatActivity
 
             case R.id.nav_nestedRecycleView: {
                 Intent intent = new Intent(this, NestedRecycyleViewActivity.class);
+                startActivity(intent);
+            }
+            break;
+
+            case R.id.nav_listViewNestedRecycleView: {
+                Intent intent = new Intent(this, ListViewNestRecyclerViewActivity.class);
                 startActivity(intent);
             }
             break;
