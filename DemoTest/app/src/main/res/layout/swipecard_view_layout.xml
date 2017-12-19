@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <com.example.chunyu.demotest.swipecard.SwipeFlingAdapterView
+        android:id="@+id/swipe_card_view"
+        android:layout_width="match_parent"
+        swipe:min_adapter_stack="4"
+        swipe:max_visible="4"
+        swipe:y_offset_step="28dp"
+        android:layout_height="400dp">
+
+    </com.example.chunyu.demotest.swipecard.SwipeFlingAdapterView>
+
+</RelativeLayout>

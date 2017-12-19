@@ -7,10 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+
+import com.example.chunyu.demotest.viewHolder.SwipeCardViewHolder;
 
 import java.util.ArrayList;
 
@@ -20,7 +24,9 @@ import java.util.ArrayList;
 
 public class NestedRecycyleViewActivity extends AppCompatActivity {
     public static final String TAG = "chunyu_test";
+    private WindowManager mWindowManager;
     RecyclerView mRecyclerView;
+    View floatingView;
     Button mButton;
 
     @Override
@@ -55,7 +61,45 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
             }
         });
 
+        mButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                createFloatingView();
+                mWindowManager = (WindowManager) mButton.getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+                params.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+                params.format = 1;
+                params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                params.flags = params.flags | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+                params.flags = params.flags | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+
+
+                params.alpha = 1.0f;
+
+                params.gravity = Gravity.LEFT | Gravity.TOP;
+
+                params.x = 0;
+                params.y = 0;
+
+                params.height = 300;
+                params.width = 300;
+
+                mWindowManager.addView(floatingView, params);
+                return true;
+            }
+        });
+
     }
+
+    public void createViewDrawable() {
+
+    }
+
+    public void createFloatingView() {
+        floatingView = new View(this);
+        floatingView.setBackgroundResource(R.drawable.ic_menu_camera);
+    }
+
 
     public void printChildHashCode() {
         int childCount = mRecyclerView.getChildCount();
@@ -77,7 +121,7 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
     }
 
 
-    public static class SampleAdapter extends RecyclerView.Adapter<SampleViewHolder> {
+    public static class SampleAdapter extends RecyclerView.Adapter {
 
         private Context mComtext;
 
@@ -88,35 +132,26 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
         ArrayList<ArrayList<String>> mData = new ArrayList<>();
 
         @Override
-        public SampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(mComtext).inflate(R.layout.item_recycle_view_layout, parent, false);
-            Log.i("chunyu-create","onCreateViewHolder");
-            return new SampleViewHolder(view, mComtext);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+            if (viewType == 1) {
+                View view = LayoutInflater.from(mComtext).inflate(R.layout.item_recycle_view_layout, parent, false);
+                Log.i("chunyu-create", "onCreateViewHolder");
+                return new SampleViewHolder(view, mComtext);
+            } else {
+//                View view = LayoutInflater.from(mComtext).inflate(R.layout.swipecard_view_layout,parent,false);
+                View view = LayoutInflater.from(mComtext).inflate(R.layout.swipecard_view_layout, parent, false);
+                return new SwipeCardViewHolder(view);
+            }
         }
 
         @Override
-        public void onViewRecycled(SampleViewHolder holder) {
-            super.onViewRecycled(holder);
-            Log.i("onViewRecycled:", holder.name + "");
-        }
-
-        @Override
-        public void onViewAttachedToWindow(SampleViewHolder holder) {
-            super.onViewAttachedToWindow(holder);
-            Log.i("onViewAttachedToWindow:", holder.name + "");
-        }
-
-        @Override
-        public void onViewDetachedFromWindow(SampleViewHolder holder) {
-            super.onViewDetachedFromWindow(holder);
-            Log.i("onViewDetachFromWindow", holder.name + "");
-        }
-
-
-        @Override
-        public void onBindViewHolder(SampleViewHolder holder, int position) {
-            holder.renderView(mData.get(position), position, mComtext);
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            if (getItemViewType(position) == 1) {
+                ((SampleViewHolder) holder).renderView(mData.get(position), position, mComtext);
+            } else {
+                ((SwipeCardViewHolder) holder).renderView(mData.get(position));
+            }
         }
 
         @Override
@@ -126,6 +161,10 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
 
         @Override
         public int getItemViewType(int position) {
+
+            if (position == 3) {
+                return 3;
+            }
             return 1;
         }
 
