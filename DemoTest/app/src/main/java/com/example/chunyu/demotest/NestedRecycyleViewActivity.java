@@ -1,6 +1,8 @@
 package com.example.chunyu.demotest;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.chunyu.demotest.customeView.FloatView;
 import com.example.chunyu.demotest.viewHolder.SwipeCardViewHolder;
 
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
     public static final String TAG = "chunyu_test";
     private WindowManager mWindowManager;
     RecyclerView mRecyclerView;
-    View floatingView;
+    FloatView floatingView;
     Button mButton;
 
     @Override
@@ -64,39 +68,43 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
         mButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                createFloatingView();
-                mWindowManager = (WindowManager) mButton.getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+
+                mWindowManager = (WindowManager) mButton.getContext().getSystemService(Context.WINDOW_SERVICE);
                 WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-                params.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
-                params.format = 1;
-                params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                params.flags = params.flags | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
-                params.flags = params.flags | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+//                params.type = WindowManager.LayoutParams.TYPE_TOAST;
 
-
-                params.alpha = 1.0f;
-
-                params.gravity = Gravity.LEFT | Gravity.TOP;
-
+                params.gravity = Gravity.TOP;
                 params.x = 0;
-                params.y = 0;
+                int xy[] = new int[2];
 
-                params.height = 300;
-                params.width = 300;
+                mButton.getLocationOnScreen(xy);
+                params.y = xy[1] + mButton.getHeight();
 
-                mWindowManager.addView(floatingView, params);
+                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+                params.format = PixelFormat.TRANSLUCENT;
+                params.windowAnimations = 0;
+//                createFloatingView(params);
+                ImageView imageView = new ImageView(NestedRecycyleViewActivity.this);
+                imageView.setImageBitmap(createViewDrawable());
+                mWindowManager.addView(imageView, params);
                 return true;
             }
         });
 
     }
 
-    public void createViewDrawable() {
-
+    public Bitmap createViewDrawable() {
+        mButton.setDrawingCacheEnabled(true);
+        return Bitmap.createBitmap(mButton.getDrawingCache());
     }
 
-    public void createFloatingView() {
-        floatingView = new View(this);
+    public void createFloatingView(WindowManager.LayoutParams params) {
+        floatingView = new FloatView(this, params);
         floatingView.setBackgroundResource(R.drawable.ic_menu_camera);
     }
 
