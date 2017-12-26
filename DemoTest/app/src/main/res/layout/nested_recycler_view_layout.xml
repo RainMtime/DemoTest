@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
+    <com.example.chunyu.demotest.customeView.GestureButton
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="点我" />
+
+    <com.example.chunyu.demotest.customeView.RadioSwipeCardView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"></com.example.chunyu.demotest.customeView.RadioSwipeCardView>
+
+    <!--<com.example.chunyu.demotest.customeView.FloatView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"

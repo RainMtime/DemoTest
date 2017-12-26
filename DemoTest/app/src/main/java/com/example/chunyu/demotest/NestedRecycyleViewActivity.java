@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -18,6 +20,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.chunyu.demotest.customeView.FloatView;
+import com.example.chunyu.demotest.customeView.GestureButton;
+import com.example.chunyu.demotest.viewHolder.BaseRecyclerViewHolder;
 import com.example.chunyu.demotest.viewHolder.SwipeCardViewHolder;
 
 import java.util.ArrayList;
@@ -31,7 +35,8 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
     private WindowManager mWindowManager;
     RecyclerView mRecyclerView;
     FloatView floatingView;
-    Button mButton;
+    GestureDetector mGestureDetector;
+    GestureButton mButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,12 +48,14 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
 
     protected void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        mButton = (Button) findViewById(R.id.button);
+        mButton = (GestureButton) findViewById(R.id.button);
 
         SampleAdapter adapter = new SampleAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
         adapter.setData(mockData());
+        initGesture();
+        mButton.setGestureDetector(mGestureDetector);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +72,7 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
             }
         });
 
+
         mButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -74,11 +82,12 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
 //                params.type = WindowManager.LayoutParams.TYPE_TOAST;
 
                 params.gravity = Gravity.TOP;
-                params.x = 0;
+
                 int xy[] = new int[2];
 
                 mButton.getLocationOnScreen(xy);
-                params.y = xy[1] + mButton.getHeight();
+                params.x = xy[0];
+                params.y = xy[1];
 
                 params.width = WindowManager.LayoutParams.WRAP_CONTENT;
                 params.height = WindowManager.LayoutParams.WRAP_CONTENT;
@@ -96,6 +105,50 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void initGesture() {
+        mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+            private float touchX;
+            private float touchY;
+
+            private float sumDistanceX;
+            private float sumDistanceY;
+
+            @Override
+            public boolean onDown(MotionEvent e) {
+                touchX = e.getRawX();
+                touchY = e.getRawY();
+                Log.i("chunyu-touch", "touchx:" + touchX + "\t touchy:" + touchY);
+                return false;
+            }
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                Log.i("chunyu-touch", "onSingleTapUp");
+                return false;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+                sumDistanceX += distanceX;
+                sumDistanceY += distanceY;
+                Log.i("chunyu-touch", "onScroll->sumDistanceX:" + sumDistanceX + "\t sumDistanceY:" + sumDistanceY);
+                return false;
+            }
+
+            @Override
+            public void onLongPress(MotionEvent e) {
+                Log.i("chunyu-touch", "onLongPress");
+            }
+
+            @Override
+            public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                Log.i("chunyu-touch", "onFling");
+                return false;
+            }
+        });
     }
 
     public Bitmap createViewDrawable() {
@@ -146,6 +199,9 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
                 View view = LayoutInflater.from(mComtext).inflate(R.layout.item_recycle_view_layout, parent, false);
                 Log.i("chunyu-create", "onCreateViewHolder");
                 return new SampleViewHolder(view, mComtext);
+            } else if (viewType == 2) {
+                View view = LayoutInflater.from(mComtext).inflate(R.layout.swipe_cardview_layout, parent, false);
+                return new BaseRecyclerViewHolder(view);
             } else {
 //                View view = LayoutInflater.from(mComtext).inflate(R.layout.swipecard_view_layout,parent,false);
                 View view = LayoutInflater.from(mComtext).inflate(R.layout.swipecard_view_layout, parent, false);
@@ -157,6 +213,8 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (getItemViewType(position) == 1) {
                 ((SampleViewHolder) holder).renderView(mData.get(position), position, mComtext);
+            } else if (getItemViewType(position) == 2) {
+
             } else {
                 ((SwipeCardViewHolder) holder).renderView(mData.get(position));
             }
@@ -172,6 +230,8 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
 
             if (position == 3) {
                 return 3;
+            } else if (position == 2) {
+                return 2;
             }
             return 1;
         }
@@ -266,5 +326,6 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
             Log.w(NestedRecycyleViewActivity.TAG, ItemData.toString());
         }
     }
+
 
 }
