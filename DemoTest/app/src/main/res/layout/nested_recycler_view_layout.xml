@@ -1,24 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.chunyu.demotest.customeView.GestureButton
+    <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
+        android:elevation="0dp"
         android:layout_height="50dp"
         android:text="点我" />
 
-    <com.example.chunyu.demotest.customeView.RadioSwipeCardView
+
+    <com.example.chunyu.demotest.customeView.SwitchCardView
+        android:layout_below="@+id/button"
+        android:id="@+id/swith_cardview"
+        android:translationZ="100dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"></com.example.chunyu.demotest.customeView.RadioSwipeCardView>
+        android:background="#99ffff"
+        android:clipChildren="false"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/swith_cardview_item"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#ffff99"
+            android:layout_centerInParent="true" />
+
+    </com.example.chunyu.demotest.customeView.SwitchCardView>
+
+    <com.example.chunyu.demotest.customeView.RadioSwipeCardView
+        android:id="@+id/swipe_view"
+       android:layout_below="@+id/swith_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+    </com.example.chunyu.demotest.customeView.RadioSwipeCardView>
+
 
     <!--<com.example.chunyu.demotest.customeView.FloatView-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="100dp" />-->
 
     <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/swipe_view"
         android:id="@+id/recycle_view"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,4 +52,4 @@
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</RelativeLayout>

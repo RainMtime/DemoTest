@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:layout_height="match_parent">
+
+    <com.example.chunyu.demotest.customeView.SwitchCardView
+        android:layout_width="match_parent"
+        android:background="#99ffff"
+        android:clipChildren="false"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/swith_cardview_item"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="#ffff99"
+            android:layout_centerInParent="true" />
+
+    </com.example.chunyu.demotest.customeView.SwitchCardView>
+
+</android.support.constraint.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.chunyu.demotest;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,14 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.example.chunyu.demotest.customeView.FloatView;
 import com.example.chunyu.demotest.customeView.GestureButton;
@@ -48,62 +45,62 @@ public class NestedRecycyleViewActivity extends AppCompatActivity {
 
     protected void initView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycle_view);
-        mButton = (GestureButton) findViewById(R.id.button);
+//        mButton = (GestureButton) findViewById(R.id.button);
 
         SampleAdapter adapter = new SampleAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(adapter);
         adapter.setData(mockData());
         initGesture();
-        mButton.setGestureDetector(mGestureDetector);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                printChildHashCode();
-                mRecyclerView.getAdapter().notifyDataSetChanged();
-
-                mRecyclerView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        printChildHashCode();
-                    }
-                });
-            }
-        });
-
-
-        mButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-
-                mWindowManager = (WindowManager) mButton.getContext().getSystemService(Context.WINDOW_SERVICE);
-                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-//                params.type = WindowManager.LayoutParams.TYPE_TOAST;
-
-                params.gravity = Gravity.TOP;
-
-                int xy[] = new int[2];
-
-                mButton.getLocationOnScreen(xy);
-                params.x = xy[0];
-                params.y = xy[1];
-
-                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-                params.format = PixelFormat.TRANSLUCENT;
-                params.windowAnimations = 0;
-//                createFloatingView(params);
-                ImageView imageView = new ImageView(NestedRecycyleViewActivity.this);
-                imageView.setImageBitmap(createViewDrawable());
-                mWindowManager.addView(imageView, params);
-                return true;
-            }
-        });
+//        mButton.setGestureDetector(mGestureDetector);
+//        mButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                printChildHashCode();
+//                mRecyclerView.getAdapter().notifyDataSetChanged();
+//
+//                mRecyclerView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        printChildHashCode();
+//                    }
+//                });
+//            }
+//        });
+//
+//
+//        mButton.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//
+//                mWindowManager = (WindowManager) mButton.getContext().getSystemService(Context.WINDOW_SERVICE);
+//                WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+////                params.type = WindowManager.LayoutParams.TYPE_TOAST;
+//
+//                params.gravity = Gravity.TOP;
+//
+//                int xy[] = new int[2];
+//
+//                mButton.getLocationOnScreen(xy);
+//                params.x = xy[0];
+//                params.y = xy[1];
+//
+//                params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+//                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//                params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+//                        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+//                        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+//                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+//                params.format = PixelFormat.TRANSLUCENT;
+//                params.windowAnimations = 0;
+////                createFloatingView(params);
+//                ImageView imageView = new ImageView(NestedRecycyleViewActivity.this);
+//                imageView.setImageBitmap(createViewDrawable());
+//                mWindowManager.addView(imageView, params);
+//                return true;
+//            }
+//        });
 
     }
 
