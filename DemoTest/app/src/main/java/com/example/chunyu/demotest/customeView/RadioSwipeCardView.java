@@ -22,6 +22,8 @@ import android.widget.RelativeLayout;
 
 import com.example.chunyu.demotest.Utils.DemoUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by chunyu on 2017/12/26.
  */
@@ -29,6 +31,12 @@ import com.example.chunyu.demotest.Utils.DemoUtils;
 public class RadioSwipeCardView extends RelativeLayout {
 
     private static final float BOTTOM_VIEW_ROTATION = -5.0f;
+
+    private static final float ROTATION = 18.0f;
+    private static final float MOVE_DISTANCE_X = 150;
+
+    ArrayList<View> floatingViewArrayList = new ArrayList<>();
+
 
     private float TouchX;
     private float TouchY;
@@ -87,7 +95,7 @@ public class RadioSwipeCardView extends RelativeLayout {
         boolean comsumed = false;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-
+                getParent().requestDisallowInterceptTouchEvent(true);
                 Log.i("chunyu-down", "intercept-aciton_down");
                 if (decorView == null) {
                     if (getContext() instanceof Activity) {
@@ -114,7 +122,6 @@ public class RadioSwipeCardView extends RelativeLayout {
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.i("chunyu-move", "intercept-aciton_move");
-                getParent().requestDisallowInterceptTouchEvent(true);
                 sumDistanceX = event.getRawX() - TouchX;
                 sumDistanceY = event.getRawY() - TouchY;
 
@@ -192,28 +199,29 @@ public class RadioSwipeCardView extends RelativeLayout {
         if (floatingView != null && hasFloatingView) {
             float translationX = floatingView.getTranslationX();
             float translationY = floatingView.getTranslationY();
-            float widthRule = floatingView.getWidth() / 2;
-            float heightRule = floatingView.getHeight();
-
-
             floatingView.setTranslationX(translationX + x);
             floatingView.setTranslationY(translationY + y);
-            floatingView.setRotation(10 * (sumX / widthRule));
-            floatingView.setAlpha(1.0f - 0.3f * Math.abs(sumY / heightRule));
 
-            float bottomViewRotation = BOTTOM_VIEW_ROTATION * (1.0f - Math.abs(sumDistanceY) / heightRule);
-            float bottomViewAlpha = Math.abs(sumDistanceY) / heightRule;
+            float widthRule = floatingView.getWidth();
+            float heightRule = floatingView.getHeight();
+            float rate = (float) Math.pow(Math.sqrt(sumDistanceY * sumDistanceY + sumDistanceX * sumDistanceX) / widthRule, 2.0);
+
+            if (rate > 1.0) {
+                rate = 1.0f;
+            }
+
+
+            floatingView.setRotation(sumX > 0.0 ? ROTATION * rate : -ROTATION * rate);
+            floatingView.setAlpha(1.0f - rate);
+
+            float bottomViewRotation = sumX > 0.0 ? BOTTOM_VIEW_ROTATION * (1.0f - rate) : -BOTTOM_VIEW_ROTATION * (1.0f - rate);
+            float bottomViewAlpha = rate;
             if (bottomViewAlpha < 0.0f) {
                 bottomViewAlpha = 0.0f;
             } else if (bottomViewAlpha >= 1.0f) {
                 bottomViewAlpha = 1.0f;
             }
 
-            if (bottomViewRotation < BOTTOM_VIEW_ROTATION) {
-                bottomViewRotation = BOTTOM_VIEW_ROTATION;
-            } else if (bottomViewRotation > 0) {
-                bottomViewRotation = 0;
-            }
 
             mBottomCardView.setRotation(bottomViewRotation);
             mBottomCardView.setAlpha(bottomViewAlpha);
@@ -227,7 +235,7 @@ public class RadioSwipeCardView extends RelativeLayout {
         if (decorView != null && floatingView != null) {
             AnimatorSet animationSet = new AnimatorSet();
 
-            if (Math.abs(sumDistanceX) < 100 && Math.abs(sumDistanceY) < 100) {
+            if (Math.abs(sumDistanceX) < MOVE_DISTANCE_X && Math.abs(sumDistanceY) < MOVE_DISTANCE_X) {
 
                 animationSet.addListener(new Animator.AnimatorListener() {
                     @Override
@@ -374,6 +382,7 @@ public class RadioSwipeCardView extends RelativeLayout {
         if (decorView != null && !hasFloatingView) {
             ViewGroup viewGroup = getDecorView(getContext());
             floatingView = new ImageView(getContext());
+
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             floatingView.setLayoutParams(layoutParams);
             floatingView.setImageBitmap(createViewDrawable());
